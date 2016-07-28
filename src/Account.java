@@ -7,6 +7,7 @@ public class Account {
     private float balance;
     private ArrayList<Transaction> transactions;
     private int numOverdrafts;
+    private boolean accountClosed;
 
     public Account(Type type) {
         Random rand = new Random();
@@ -14,6 +15,7 @@ public class Account {
         this.type = type;
         this.transactions = new ArrayList<Transaction>();
         this.numOverdrafts = 0;
+        this.accountClosed = false;
     }
 
     public String getId() {
@@ -35,9 +37,25 @@ public class Account {
     }
 
     public void withdraw(float amount) {
-        Transaction t = new Transaction(amount, TransactionType.WITHDRAWAL);
-        this.transactions.add(t);
-        this.balance -= amount;
+        if (this.balance >= amount) {
+            Transaction t = new Transaction(amount, TransactionType.WITHDRAWAL);
+            this.transactions.add(t);
+            this.balance -= amount;
+        } else {
+            this.numOverdrafts++;
+            if (this.numOverdrafts >= 3) {
+                this.accountClosed = true;
+            }
+            this.balance -= 50.0f;
+        }
+    }
+
+    public int getNumOverDrafts() {
+        return this.numOverdrafts;
+    }
+
+    public boolean isAccountClosed() {
+        return this.accountClosed;
     }
 
 }

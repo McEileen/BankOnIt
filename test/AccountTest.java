@@ -53,7 +53,19 @@ public class AccountTest {
         assertEquals(150.00f, acct.getBalance(), 0.01);
         int numTransactions = acct.getTransactions().size();
         assertEquals(numTransactions, 1);
-        assertEquals(1, acct.getNumOverDrafts);
+        assertEquals(acct.getNumOverDrafts(), 1);
+    }
+
+    @Test
+    public void testClosedAccountAtThreeOverdrafts() {
+        Account acct = new Account(Type.SAVINGS);
+        acct.deposit(10.00f);
+        acct.withdraw(100.00f);
+        assertFalse(acct.isAccountClosed());
+        acct.withdraw(100.00f);
+        assertFalse(acct.isAccountClosed());
+        acct.withdraw(100.00f);
+        assertTrue(acct.isAccountClosed());
     }
 
 }
