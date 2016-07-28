@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Account {
@@ -56,6 +58,17 @@ public class Account {
 
     public boolean isAccountClosed() {
         return this.accountClosed;
+    }
+
+    public Float[] filterTransactions(TransactionType transactionType) {
+//        return (Transaction[]) transactions.stream().filter(transaction -> transaction.getType()).toArray();
+//        System.out.println("SEEEE BELOW");
+//        System.out.println(transactions.stream().filter(transaction -> transaction.getType() == transactionType).toArray(Transaction[]::new));
+      return (Transaction[]) transactions.stream()
+              .filter(transaction -> transaction.getType() == transactionType)
+              .map(transaction -> transaction.getAmount())
+              .collect();
+// return (Transaction[]) transactions.stream().filter(transaction -> transaction.getType() == transactionType).toArray();
     }
 
 }

@@ -1,6 +1,10 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import javax.accessibility.AccessibleStateSet;
+
 import static org.junit.Assert.*;
 
 public class AccountTest {
@@ -66,6 +70,24 @@ public class AccountTest {
         assertFalse(acct.isAccountClosed());
         acct.withdraw(100.00f);
         assertTrue(acct.isAccountClosed());
+    }
+
+    @Test
+    public void testFilterTransactionsByType() {
+        Account acct = new Account(Type.SAVINGS);
+        acct.deposit(100.00f);
+        acct.withdraw(10.00f);
+        acct.deposit(100.00f);
+        acct.deposit(100.00f);
+        acct.withdraw(10.00f);
+        System.out.println("IN TEST");
+        System.out.println(acct.filterTransactions(TransactionType.DEPOSIT)[0]);
+        assertEquals(acct.filterTransactions(TransactionType.DEPOSIT).length, 3);
+        Assert.assertEquals(TransactionType.DEPOSIT, acct.filterTransactions(TransactionType.DEPOSIT)[0]);
+
+//        assertThat(acct.filterTransactions(TransactionType.DEPOSIT)[0], instanceOf(TransactionType.DEPOSIT));
+        assertEquals(acct.filterTransactions(TransactionType.WITHDRAWAL).length, 2);
+//        assertThat(acct.filterTransactions(TransactionType.WITHDRAWAL)[1], instanceOf(TransactionType.DEPOSIT));
     }
 
 }

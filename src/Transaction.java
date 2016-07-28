@@ -31,10 +31,10 @@ public class Transaction {
     public float getAmount() {
         return amount;
     }
-    @Override
-    public String toString() {
-        return this.id + " made a " + this.type + " of " + String.format("%.2f", this.amount) + " on " + this.localDateTime.toString();
-    }
+//    @Override
+//    public String toString() {
+//        return this.id + " made a " + this.type + " of " + String.format("%.2f", this.amount) + " on " + this.localDateTime.toString();
+//    }
 
 
 }
